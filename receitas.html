@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catálogo de Receitas</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #ffc107;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <h1>Catálogo de Receitas</h1>
+    <div id="pnlCatalogo" class="d-flex flex-wrap"></div>
+  </div>
+
+  <script>
+    // Dados das receitas
+    const receitas = [
+      {
+        titulo: "Bolo de Chocolate",
+        imagem: "bolo-chocolate.png",
+        preparo: "Passo 1. Misture os ingredientes em uma tigela.\nPasso 2. Asse em forno pré-aquecido a 180°C por 30 minutos.",
+        ingredientes: [
+          "3 ovos",
+          "2 xícaras de farinha de trigo",
+          "1 xícara de açúcar",
+          "1/2 xícara de cacau em pó",
+          "1 colher de chá de fermento em pó",
+          "1/2 xícara de leite",
+          "1/2 xícara de óleo"
+        ]
+      },
+      {
+        titulo: "Pudim de Leite Condensado",
+        imagem: "pudim-leite-condensado.png",
+        preparo: "Passo 1. Bata todos os ingredientes no liquidificador.\nPasso 2. Despeje em uma forma caramelizada e leve ao forno em banho-maria por 1 hora.",
+        ingredientes: [
+          "1 lata de leite condensado",
+          "2 latas de leite (use a lata de leite condensado como medida)",
+          "3 ovos"
+        ]
+      },
+      // Adicione mais receitas aqui
+    ];
+
+    // Função para gerar a lista de ingredientes em HTML
+    function getListaIngredientes(receita) {
+      const listaHTML = receita.ingredientes.map(ingrediente => `<li>${ingrediente}</li>`).reduce((texto, item) => texto + item, '');
+      return `<ul>${listaHTML}</ul>`;
+    }
+
+    // Função para gerar o painel da receita em HTML
+    function getCard(receita) {
+      return `
+        <div class="card" style="width: 250px;">
+          <img src="${receita.imagem}" class="card-img-top" alt="Imagem da Receita">
+          <div class="card-body">
+            <h5 class="card-title">${receita.titulo}</h5>
+            <div class="card-text">
+              ${getListaIngredientes(receita)}
+              <hr>
+              ${receita.preparo}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Função para preencher o catálogo de receitas na página
+    function preencheCatalogo() {
+      const pnlCatalogo = document.getElementById('pnlCatalogo');
+      const catalogoHTML = receitas.map(receita => getCard(receita)).reduce((texto, card) => texto + card, '');
+      pnlCatalogo.innerHTML = catalogoHTML;
+    }
+
+    // Chamar a função para preencher o catálogo no carregamento da página
+    window.onload = preencheCatalogo;
+  </script>
+</body>
+</html>

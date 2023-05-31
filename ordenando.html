@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ordenando</title>
+</head>
+<body>
+  <h1>Ordenando</h1>
+
+  <label for="valor">Valor:</label>
+  <input type="number" id="valor">
+  <button onclick="add()">Adicionar</button>
+
+  <label for="algoritmo">Algoritmo:</label>
+  <select id="algoritmo">
+    <option value="bubble" selected>Bubble Sort</option>
+    <option value="selection">Selection Sort</option>
+    <option value="quick">Quick Sort</option>
+  </select>
+
+  <button onclick="ordenar()">Ordenar</button>
+  <button onclick="misturar()">Misturar</button>
+
+  <ul id="valores"></ul>
+
+  <script src="ordenando.js"></script>
+  <script>
+    // Função para adicionar um valor à lista
+    function add() {
+      const valorInput = document.getElementById('valor');
+      const valor = parseInt(valorInput.value);
+
+      if (!isNaN(valor)) {
+        const lista = document.getElementById('valores');
+        const li = document.createElement('li');
+        li.textContent = valor;
+        lista.appendChild(li);
+        valorInput.value = '';
+      }
+    }
+
+    // Função para ordenar a lista
+    function ordenar() {
+      const lista = document.getElementById('valores');
+      const valores = Array.from(lista.children).map(li => parseInt(li.textContent));
+
+      const select = document.getElementById('algoritmo');
+      const algoritmo = select.value;
+
+      switch (algoritmo) {
+        case 'bubble':
+          bubble_sort(valores);
+          break;
+        case 'selection':
+          selection_sort(valores);
+          break;
+        case 'quick':
+          quick_sort(valores);
+          break;
+        default:
+          break;
+      }
+
+      while (lista.firstChild) {
+        lista.firstChild.remove();
+      }
+
+      valores.forEach(valor => {
+        const li = document.createElement('li');
+        li.textContent = valor;
+        lista.appendChild(li);
+      });
+    }
+
+    // Função para misturar a lista
+    function misturar() {
+      const lista = document.getElementById('valores');
+      const valores = Array.from(lista.children).map(li => parseInt(li.textContent));
+
+      shuffle(valores, valores.length);
+
+      while (lista.firstChild) {
+        lista.firstChild.remove();
+      }
+
+      valores.forEach(valor => {
+        const li = document.createElement('li');
+        li.textContent = valor;
+        lista.appendChild(li);
+      });
+    }
+    
+    function add() {
+        const valorInput = document.getElementById('valor');
+        const valor = parseInt(valorInput.value);
+
+        if (!isNaN(valor)) {
+            const lista = document.getElementById('valores');
+            const node = document.createElement('li');
+            const textNode = document.createTextNode(valor);
+            node.appendChild(textNode);
+            lista.appendChild(node);
+            valorInput.value = '';
+        }
+    }
+
+    // Função para ordenar a lista
+    function ordenar() {
+        const listaValores = document.getElementById('valores');
+        const valores = Array.from(listaValores.children).map(li => parseInt(li.innerHTML));
+
+        const listaSelecao = document.getElementById('algoritmo');
+        const algoritmo = listaSelecao.options[listaSelecao.selectedIndex].value;
+
+        switch (algoritmo) {
+            case 'bubble':
+                bubble_sort(valores);
+                break;
+            case 'selection':
+                selection_sort(valores);
+                break;
+            case 'quick':
+                quick_sort(valores);
+                break;
+            default:
+                break;
+        }
+
+        listaValores.innerHTML = valores.map(valor => `<li>${valor}</li>`).reduce((accumulator, currentValue) => accumulator + currentValue, '');
+    }
+
+    // Função para misturar a lista
+    function misturar() {
+        const listaValores = document.getElementById('valores');
+        const valores = Array.from(listaValores.children).map(li => parseInt(li.innerHTML));
+
+    shuffle(valores, valores.length);
+
+    listaValores.innerHTML = valores.map(valor => `<li>${valor}</li>`).reduce((accumulator, currentValue) => accumulator + currentValue, '');
+    }
+  
+  </script>
+
+
+</body>
+</html>
